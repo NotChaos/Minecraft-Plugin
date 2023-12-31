@@ -1,0 +1,4 @@
+name: ChaosLogger
+version: '1'
+main: Core.Main
+api-version: 1.17

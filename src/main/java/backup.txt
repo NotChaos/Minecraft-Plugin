@@ -1,0 +1,67 @@
+                                                                                                                                        // LOGS
+                                                                                                                                        private static final Logger logger = Logger.getLogger(Embed.class.getName());
+
+    static {
+        setupLogging();
+    }
+
+    private static void setupLogging() {
+        try {
+            File logsDir = new File("logs");
+            if (!logsDir.exists() && !logsDir.mkdirs()) {
+                logger.log(Level.SEVERE, "Failed to create logs directory");
+            }
+
+            LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
+
+            String logFileName = "logs/log_" + formatter.format(now) + ".txt";
+            FileHandler fileHandler = new FileHandler(logFileName);
+            fileHandler.setFormatter(new SimpleFormatter());
+
+            logger.addHandler(fileHandler);
+            logger.log(Level.INFO, "Logging initialized to file: " + logFileName);
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, "Failed to set up logging: " + e.getMessage(), e);
+        }
+    }
+    private void logJsonPayload(String jsonPayload) {
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter("logs/json_payload.log", true));
+
+            writer.write("-----------------------");
+            writer.newLine();
+
+            // Split the JSON payload into lines for readability
+            String[] payloadLines = jsonPayload.split("\n");
+            for (String line : payloadLines) {
+                writer.write(line);
+                writer.newLine();
+            }
+
+            writer.write("-----------------------");
+            writer.newLine();
+
+            writer.flush();
+            writer.close();
+
+            logger.log(Level.INFO, "JSON payload logged successfully.");
+
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, "Failed to log JSON payload: " + e.getMessage(), e);
+        }
+    }
+
+
+    // LOGS
+
+
+
+
+    String jsonString = json.toString();                           // LOGS
+            logJsonPayload(jsonString);                                    // LOGS
+
+
+
+
+            logger.log(Level.INFO, "Execution started");

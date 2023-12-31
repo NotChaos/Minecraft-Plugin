@@ -1,0 +1,4 @@
+name: ChaosLogger
+version: '${project.version}'
+main: Core.Main
+api-version: 1.17
